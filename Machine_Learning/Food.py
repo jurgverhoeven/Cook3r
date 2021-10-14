@@ -39,7 +39,8 @@ class Food:
         return self.prominentColor[2]
 
     def getProminentHue(self):
-        return colorsys.rgb_to_hsv(1/self.getProminentColorRed(), 1/self.getProminentColorGreen(), 1/self.getProminentColorBlue())[0]
+        return int(colorsys.rgb_to_hsv(1/self.getProminentColorRed(), 1/self.getProminentColorGreen(), 1/self.getProminentColorBlue())[0]*255)
+        
 
     def determineArea(self, image):
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
