@@ -21,10 +21,10 @@ if __name__ == "__main__":
     # partition the data into training and testing splits using 75% of
     # the data for training and the remaining 25% for testing
     (trainX, testX, trainY, testY) = train_test_split(foods.data, coded_labels,
-	test_size=0.25, stratify=foods.target)
+	test_size=0.20, stratify=foods.target)
 
-    # # Data preparation (note that a pipeline  would help here)
-    # trainX = StandardScaler().fit_transform(trainX)
+    # Data preparation (note that a pipeline  would help here)
+    trainX = StandardScaler().fit_transform(trainX)
 
     # show target distribution
     ax = sns.countplot(x=trainY, color="skyblue")
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     a, b = 0, 1
     fig1 = plt.figure()
     ax1 = sns.scatterplot(trainX[:,a], trainX[:,b], hue=le.inverse_transform(trainY))
-    ax1.set_title("Example of feature scatter plot")
+    ax1.set_title("Scatter plot Area Perimeter")
     ax1.set_xlabel(foods.feature_names[a])
     ax1.set_ylabel(foods.feature_names[b])
     plt.tight_layout()
@@ -61,15 +61,59 @@ if __name__ == "__main__":
     plt.savefig('scatter_plot_area_perimeter.png')
 
     # show scatter plot of features a and b
-    a, b = 1, 2
+    a, b = 0, 2
     fig1 = plt.figure()
     ax1 = sns.scatterplot(trainX[:,a], trainX[:,b], hue=le.inverse_transform(trainY))
-    ax1.set_title("Example of feature scatter plot")
+    ax1.set_title("Scatter plot Area prominent_hue")
     ax1.set_xlabel(foods.feature_names[a])
     ax1.set_ylabel(foods.feature_names[b])
     plt.tight_layout()
     
-    plt.savefig('scatter_plot_perimeter_hue.png')
+    plt.savefig('scatter_plot_area_prominent_hue.png')
+
+    # show scatter plot of features a and b
+    a, b = 0, 3
+    fig1 = plt.figure()
+    ax1 = sns.scatterplot(trainX[:,a], trainX[:,b], hue=le.inverse_transform(trainY))
+    ax1.set_title("Scatter plot Area shape")
+    ax1.set_xlabel(foods.feature_names[a])
+    ax1.set_ylabel(foods.feature_names[b])
+    plt.tight_layout()
+    
+    plt.savefig('scatter_plot_area_shape.png')
+
+    # show scatter plot of features a and b
+    a, b = 1, 2
+    fig1 = plt.figure()
+    ax1 = sns.scatterplot(trainX[:,a], trainX[:,b], hue=le.inverse_transform(trainY))
+    ax1.set_title("Scatter plot Perimeter prominent_hue")
+    ax1.set_xlabel(foods.feature_names[a])
+    ax1.set_ylabel(foods.feature_names[b])
+    plt.tight_layout()
+    
+    plt.savefig('scatter_plot_perimeter_prominent_hue.png')
+
+    # show scatter plot of features a and b
+    a, b = 1, 3
+    fig1 = plt.figure()
+    ax1 = sns.scatterplot(trainX[:,a], trainX[:,b], hue=le.inverse_transform(trainY))
+    ax1.set_title("Scatter plot Perimeter shape")
+    ax1.set_xlabel(foods.feature_names[a])
+    ax1.set_ylabel(foods.feature_names[b])
+    plt.tight_layout()
+    
+    plt.savefig('scatter_plot_perimeter_shape.png')
+
+    # show scatter plot of features a and b
+    a, b = 2, 3
+    fig1 = plt.figure()
+    ax1 = sns.scatterplot(trainX[:,a], trainX[:,b], hue=le.inverse_transform(trainY))
+    ax1.set_title("Scatter plot Prominent_hue shape")
+    ax1.set_xlabel(foods.feature_names[a])
+    ax1.set_ylabel(foods.feature_names[b])
+    plt.tight_layout()
+    
+    plt.savefig('scatter_plot_prominent_hue_shape.png')
 
     # show boxplot for a single feature
     a = 1
