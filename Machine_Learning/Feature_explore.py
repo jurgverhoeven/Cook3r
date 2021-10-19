@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 if __name__ == "__main__":
-    data_path = 'C:/Users/Jurg Verhoeven/Documents/Cook3r/Testds'
+    data_path = 'C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Machine Learning report/Masked_dataset'
 
     # Fetch the data
     foods = fetch_data(data_path)
@@ -24,7 +24,7 @@ if __name__ == "__main__":
 	test_size=0.20, stratify=foods.target)
 
     # Data preparation (note that a pipeline  would help here)
-    trainX = StandardScaler().fit_transform(trainX)
+    # trainX = StandardScaler().fit_transform(trainX)
 
     # show target distribution
     ax = sns.countplot(x=trainY, color="skyblue")
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     plt.tight_layout()
 
     
-    plt.savefig('distribution.png')
+    plt.savefig('distribution.svg')
 
     # show histograms of first 4 features
     fig0, ax0 = plt.subplots(2, 2)
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     ax0[1,1].set_xlabel(foods.feature_names[3])
     plt.tight_layout()
     
-    plt.savefig('histogram.png')
+    plt.savefig('histogram.svg')
 
     # show scatter plot of features a and b
     a, b = 0, 1
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     ax1.set_ylabel(foods.feature_names[b])
     plt.tight_layout()
     
-    plt.savefig('scatter_plot_area_perimeter.png')
+    plt.savefig('scatter_plot_area_perimeter.svg')
 
     # show scatter plot of features a and b
     a, b = 0, 2
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     ax1.set_ylabel(foods.feature_names[b])
     plt.tight_layout()
     
-    plt.savefig('scatter_plot_area_prominent_hue.png')
+    plt.savefig('scatter_plot_area_prominent_hue.svg')
 
     # show scatter plot of features a and b
     a, b = 0, 3
@@ -80,7 +80,7 @@ if __name__ == "__main__":
     ax1.set_ylabel(foods.feature_names[b])
     plt.tight_layout()
     
-    plt.savefig('scatter_plot_area_shape.png')
+    plt.savefig('scatter_plot_area_shape.svg')
 
     # show scatter plot of features a and b
     a, b = 1, 2
@@ -91,7 +91,7 @@ if __name__ == "__main__":
     ax1.set_ylabel(foods.feature_names[b])
     plt.tight_layout()
     
-    plt.savefig('scatter_plot_perimeter_prominent_hue.png')
+    plt.savefig('scatter_plot_perimeter_prominent_hue.svg')
 
     # show scatter plot of features a and b
     a, b = 1, 3
@@ -102,7 +102,7 @@ if __name__ == "__main__":
     ax1.set_ylabel(foods.feature_names[b])
     plt.tight_layout()
     
-    plt.savefig('scatter_plot_perimeter_shape.png')
+    plt.savefig('scatter_plot_perimeter_shape.svg')
 
     # show scatter plot of features a and b
     a, b = 2, 3
@@ -113,7 +113,17 @@ if __name__ == "__main__":
     ax1.set_ylabel(foods.feature_names[b])
     plt.tight_layout()
     
-    plt.savefig('scatter_plot_prominent_hue_shape.png')
+    plt.savefig('scatter_plot_prominent_hue_shape.svg')
+
+    # show boxplot for a single feature
+    a = 0
+    plt.figure()
+    ax3 = sns.boxplot(x=le.inverse_transform(trainY), y=trainX[:,a])
+    ax3.set_title(foods.feature_names[a])
+    ax3.set_ylabel(foods.feature_names[a])
+    plt.tight_layout()
+    
+    plt.savefig('boxplot_area.svg')
 
     # show boxplot for a single feature
     a = 1
@@ -123,7 +133,27 @@ if __name__ == "__main__":
     ax3.set_ylabel(foods.feature_names[a])
     plt.tight_layout()
     
-    plt.savefig('boxplot.png')
+    plt.savefig('boxplot_perimeter.svg')
+
+    # show boxplot for a single feature
+    a = 2
+    plt.figure()
+    ax3 = sns.boxplot(x=le.inverse_transform(trainY), y=trainX[:,a])
+    ax3.set_title(foods.feature_names[a])
+    ax3.set_ylabel(foods.feature_names[a])
+    plt.tight_layout()
+    
+    plt.savefig('boxplot_prominent_hue.svg')
+
+    # show boxplot for a single feature
+    a = 3
+    plt.figure()
+    ax3 = sns.boxplot(x=le.inverse_transform(trainY), y=trainX[:,a])
+    ax3.set_title(foods.feature_names[a])
+    ax3.set_ylabel(foods.feature_names[a])
+    plt.tight_layout()
+    
+    plt.savefig('boxplot_shape.svg')
 
     # show feature correlation heatmap
     plt.figure()
@@ -131,7 +161,7 @@ if __name__ == "__main__":
     ax4 = sns.heatmap(corr, annot=True, xticklabels=foods.feature_names, yticklabels=foods.feature_names)
     plt.tight_layout()    
     
-    plt.savefig('correlation_heatmap.png')
+    plt.savefig('correlation_heatmap.svg')
     
     plt.show(block=False)
 

@@ -67,7 +67,7 @@ class Meatball_detect:
             circles = np.uint16(np.around(circles))
             for i in circles[0, :]:
                 meatballImage, x, y, r = self.__meatballCrop(maskedMeatballs, i[0], i[1], i[2])
-                meatball = Food.Meatball(image=meatballImage, x=x, y=y, radius=r)
+                meatball = Food.Meatball(image=meatballImage, x=x, y=y, width=r, height=r)
 
                 meatballList.append(meatball)
         return meatballList

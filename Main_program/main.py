@@ -7,21 +7,26 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import cv2
 import Food
+import os
+
+food_path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Black_pans_masked_warped"
+
 
 if __name__ == "__main__":
-    food_path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Black_pans_masked_warped/Meatballs/IMG_3571.jpg"
-
-    food_image = cv2.imread(food_path)
-
-    cv2.imshow("Food image", food_image)
-
-    pan = Pan.Pan(food_image)
-    cv2.imshow("Masked pan", pan.getMasked())
-
+    foodItemsList = []
     food_recognition = Food_recognition()
-
-    food_items = food_recognition.recognize(pan.getMasked())
-
+    for root, dirs, files in os.walk(food_path):
+        for dir in dirs:
+            for root1, dirs1, files1 in os.walk(food_path+"/"+dir):
+                for filename in files1:
+                    print("Filename: "+filename)
+                    food_image = cv2.imread(food_path+"/"+dir+"/"+filename)
+                    # cv2.imshow("Food image", food_image)
+                    pan = Pan.Pan(food_image)
+                    cv2.imshow("Masked pan", pan.getMasked())
+                    food_items = food_recognition.recognize(pan.getMasked())
+                    foodItemsList.append(food_items)
+    print(foodItemsList)
     cv2.waitKey(0)
 
 
