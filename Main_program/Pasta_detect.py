@@ -22,7 +22,7 @@ class Pasta_detect:
         filteredImage = cv2.bitwise_and(image, image, mask=mask)
         cv2.namedWindow("Filtered Image", cv2.WINDOW_NORMAL)
         cv2.resizeWindow("Filtered Image", 500, 500)
-        cv2.imshow("Filtered Image", filteredImage)
+        # cv2.imshow("Filtered Image", filteredImage)
 
         kernel = np.array([[1, 1, 1], [1, -8, 1], [1, 1, 1]], dtype=np.float32)
         # Use laplacian filtering and convert it to CV_32F
@@ -47,7 +47,7 @@ class Pasta_detect:
 
         cv2.namedWindow('Distance Transform Image', cv2.WINDOW_NORMAL)
         cv2.resizeWindow('Distance Transform Image', 500, 500)
-        cv2.imshow('Distance Transform Image', dist)
+        # cv2.imshow('Distance Transform Image', dist)
 
         _, dist = cv2.threshold(dist, 0.4, 1.0, cv2.THRESH_BINARY)
 
@@ -58,7 +58,7 @@ class Pasta_detect:
         dist = cv2.erode(dist,kernelErode)
         cv2.namedWindow('Peaks', cv2.WINDOW_NORMAL)
         cv2.resizeWindow('Peaks', 500, 500)
-        cv2.imshow('Peaks', dist)
+        # cv2.imshow('Peaks', dist)
             
         dist_8u = dist.astype('uint8')
 
@@ -84,7 +84,7 @@ class Pasta_detect:
             x,y,w,h = cv2.boundingRect(contours[i])
             cropped_image = cnt[y:y+h, x:x+w]
             # Uncomment the line below to display a window for each individual cropped image
-            # cv2.imshow(windowname, cropped_image)
+            # # cv2.imshow(windowname, cropped_image)
             # Save the image and filter out the outliers that are too small
             if(area > 1500 and area < 2500):
                 pastaPiece = Food.Pasta(image=cropped_image, x=x, y=y, width=w, height=h)
@@ -98,7 +98,7 @@ class Pasta_detect:
 
         cv2.namedWindow('Markers', cv2.WINDOW_NORMAL)
         cv2.resizeWindow('Markers', 500, 500)
-        cv2.imshow('Markers', markers_8u)
+        # cv2.imshow('Markers', markers_8u)
 
         cv2.watershed(imgResult, markers)
         mark = markers.astype('uint8')
@@ -106,6 +106,6 @@ class Pasta_detect:
 
         cv2.namedWindow('Markers_v2', cv2.WINDOW_NORMAL)
         cv2.resizeWindow('Markers_v2', 500, 500)
-        cv2.imshow('Markers_v2', mark)
+        # cv2.imshow('Markers_v2', mark)
 
         return pastaList

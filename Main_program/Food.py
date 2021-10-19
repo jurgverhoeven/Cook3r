@@ -37,7 +37,7 @@ class Food:
         color = (rng.randint(0, 256), rng.randint(0, 256), rng.randint(0, 256))
         cv2.drawContours(drawing, contours, countervalue, color, 2, cv2.LINE_8, hierarchy, 0)
         # Show in a window
-        cv2.imshow('Contours', drawing)
+        # cv2.imshow('Contours', drawing)
         return highest, cv2.arcLength(contours[countervalue],True)
 
     def determineProminentColor(self, img):

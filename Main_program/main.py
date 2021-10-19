@@ -9,7 +9,7 @@ import cv2
 import Food
 import os
 
-food_path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Black_pans_masked_warped"
+food_path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Black_pans"
 
 
 if __name__ == "__main__":
@@ -21,9 +21,9 @@ if __name__ == "__main__":
                 for filename in files1:
                     print("Filename: "+filename)
                     food_image = cv2.imread(food_path+"/"+dir+"/"+filename)
-                    # cv2.imshow("Food image", food_image)
+                    # # cv2.imshow("Food image", food_image)
                     pan = Pan.Pan(food_image)
-                    cv2.imshow("Masked pan", pan.getMasked())
+                    # cv2.imshow("Masked pan", pan.getMasked())
                     food_items = food_recognition.recognize(pan.getMasked())
                     foodItemsList.append(food_items)
     print(foodItemsList)
