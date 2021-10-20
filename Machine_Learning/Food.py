@@ -39,7 +39,12 @@ class Food:
         return self.prominentColor[2]
 
     def getProminentHue(self):
-        return int(colorsys.rgb_to_hsv(1/self.getProminentColorRed(), 1/self.getProminentColorGreen(), 1/self.getProminentColorBlue())[0]*255)
+        print("Kleur: ")
+        print(self.getProminentColorRed())
+        print(self.getProminentColorGreen())
+        print(self.getProminentColorBlue())
+        
+        return int(colorsys.rgb_to_hsv(((1/self.getProminentColorRed()) if self.getProminentColorRed()>0 else self.getProminentColorRed()), ((1/self.getProminentColorGreen()) if self.getProminentColorGreen()>0 else self.getProminentColorGreen()), ((1/self.getProminentColorBlue()) if self.getProminentColorBlue()>0 else self.getProminentColorBlue()))[0]*255)
         
 
     def determineArea(self, image):
@@ -71,14 +76,24 @@ class Food:
 
         # define criteria, number of clusters(K) and apply kmeans()
         criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 10, 1.0)
-        K = 1
+        K = 2
         ret, label, center = cv2.kmeans(Z, K, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
+
+        black = np.array([0,0,0])
 
         # Now convert back into uint8, and make original image
         center = np.uint8(center)
         res = center[label.flatten()]
         res2 = res.reshape((img.shape))
-        return res2[0][0]
+        for i in range(len(res2)):
+            for j in range(len(res2)):
+                if res2[i][j][0] > 10 or res2[i][j][1] > 10 or res2[i][j][2] > 10:
+                # if res2[i][j] is not black:
+                    print(res2[i][j])
+                    print(black)
+                    return res2[i][j]
+        print("Dan maar zwart")
+        return black
 
 class Meatball(Food):
     def __init__(self, image):

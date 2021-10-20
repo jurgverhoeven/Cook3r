@@ -19,15 +19,6 @@ class Food:
         self.area, self.perimeter = self.determineArea(image)
         self.prominentColor = self.determineProminentColor(image)
 
-    def __init__(self, image, shape, x, y, radius):
-        self.image = image
-        self.shape = shape
-        self.x = x
-        self.y = y
-        self.radius = radius
-        self.area, self.perimeter = self.determineArea(image)
-        self.prominentColor = self.determineProminentColor(image)
-
 
     def determineArea(self, image):
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -46,7 +37,7 @@ class Food:
         color = (rng.randint(0, 256), rng.randint(0, 256), rng.randint(0, 256))
         cv2.drawContours(drawing, contours, countervalue, color, 2, cv2.LINE_8, hierarchy, 0)
         # Show in a window
-        cv2.imshow('Contours', drawing)
+        # cv2.imshow('Contours', drawing)
         return highest, cv2.arcLength(contours[countervalue],True)
 
     def determineProminentColor(self, img):
@@ -67,8 +58,8 @@ class Food:
         return res2[0][0]
 
 class Meatball(Food):
-    def __init__(self, image, x, y, radius):
-        super(Meatball, self).__init__(image, Shape.Circle, x, y, radius)
+    def __init__(self, image, x, y, width, height):
+        super(Meatball, self).__init__(image, Shape.Circle, x, y, width, height)
 
 class Pasta(Food):
     def __init__(self, image, x, y, width, height):

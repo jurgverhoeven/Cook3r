@@ -12,7 +12,7 @@ class Circle:
 def maskImage(image):
     cv2.namedWindow("Original", cv2.WINDOW_NORMAL)
     cv2.resizeWindow("Original", 500, 500)
-    cv2.imshow("Original", image)
+    # cv2.imshow("Original", image)
 
     height, width, channels = image.shape
     heightPart = int(height/100*1)
@@ -21,7 +21,7 @@ def maskImage(image):
 
     cv2.namedWindow("Cropped", cv2.WINDOW_NORMAL)
     cv2.resizeWindow("Cropped", 500, 500)
-    cv2.imshow("Cropped", crop)
+    # cv2.imshow("Cropped", crop)
 
 
 
@@ -44,7 +44,7 @@ def maskImage(image):
                 biggestCircle = Circle(x = x1, y = y1, r = r1)
     cv2.circle(mask, (biggestCircle.x, biggestCircle.y), biggestCircle.r, 255, -1)
     masked = cv2.bitwise_and(crop, crop, mask=mask)
-    cv2.imshow("Original", masked)
+    # cv2.imshow("Original", masked)
 
     newImage = np.zeros((1000,1000,3), np.uint8)
 
@@ -77,7 +77,7 @@ def maskImage(image):
 
     out = cv2.warpPerspective(masked,M,(maxWidth, maxHeight),flags=cv2.INTER_LINEAR)
 
-    cv2.imshow("Warped", out)
+    # cv2.imshow("Warped", out)
     return out
 
 path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Black_pans/Pasta/"

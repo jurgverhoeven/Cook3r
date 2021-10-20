@@ -34,7 +34,7 @@ class Meatball_detect:
     def __findMeatballs(self, image):
         cv2.namedWindow("Original", cv2.WINDOW_NORMAL)
         cv2.resizeWindow("Original", 500, 500)
-        cv2.imshow("Original", image)
+        # cv2.imshow("Original", image)
 
         hsvImage = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
@@ -46,7 +46,7 @@ class Meatball_detect:
 
         cv2.namedWindow("HSV Masked Image", cv2.WINDOW_NORMAL)
         cv2.resizeWindow("HSV Masked Image", 500, 500)
-        cv2.imshow("HSV Masked Image", maskedMeatballs)
+        # cv2.imshow("HSV Masked Image", maskedMeatballs)
 
         gray = cv2.cvtColor(maskedMeatballs, cv2.COLOR_BGR2GRAY)
 
@@ -54,7 +54,7 @@ class Meatball_detect:
 
         cv2.namedWindow("Blurred", cv2.WINDOW_NORMAL)
         cv2.resizeWindow("Blurred", 500, 500)
-        cv2.imshow("Blurred", blurred)
+        # cv2.imshow("Blurred", blurred)
 
         circles = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, 1, 100,
                                 param1=100, param2=26, minRadius=40, maxRadius=75)
@@ -67,7 +67,7 @@ class Meatball_detect:
             circles = np.uint16(np.around(circles))
             for i in circles[0, :]:
                 meatballImage, x, y, r = self.__meatballCrop(maskedMeatballs, i[0], i[1], i[2])
-                meatball = Food.Meatball(image=meatballImage, x=x, y=y, radius=r)
+                meatball = Food.Meatball(image=meatballImage, x=x, y=y, width=r, height=r)
 
                 meatballList.append(meatball)
         return meatballList

@@ -14,7 +14,7 @@ class Pan:
     def getMasked(self):
         cv2.namedWindow("Original pan image", cv2.WINDOW_NORMAL)
         cv2.resizeWindow("Original pan image", 500, 500)
-        cv2.imshow("Original pan image", self.image)
+        # cv2.imshow("Original pan image", self.image)
 
         height, width, channels = self.image.shape
         heightPart = int(height/100*1)
@@ -23,7 +23,7 @@ class Pan:
 
         cv2.namedWindow("Cropped pan image", cv2.WINDOW_NORMAL)
         cv2.resizeWindow("Cropped pan image", 500, 500)
-        cv2.imshow("Cropped pan image", crop)
+        # cv2.imshow("Cropped pan image", crop)
 
         gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
         blurred = cv2.GaussianBlur(gray, (11, 11), cv2.BORDER_DEFAULT)
@@ -31,7 +31,7 @@ class Pan:
 
         cv2.namedWindow("Blurred pan image", cv2.WINDOW_NORMAL)
         cv2.resizeWindow("Blurred pan image", 500, 500)
-        cv2.imshow("Blurred pan image", blurred)
+        # cv2.imshow("Blurred pan image", blurred)
 
         # circlesInBlurred = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, 1.3, 100, minRadius=500, maxRadius=750)
         circlesInBlurred = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, 1.3, 100, minRadius=500, maxRadius=750)
@@ -49,7 +49,7 @@ class Pan:
                     biggestCircle = Circle(x = x1, y = y1, r = r1)
         cv2.circle(mask, (biggestCircle.x, biggestCircle.y), biggestCircle.r, 255, -1)
         masked = cv2.bitwise_and(crop, crop, mask=mask)
-        cv2.imshow("Original", masked)
+        # cv2.imshow("Original", masked)
         print("Biggest circle diameter: ")
         print(biggestCircle.r)
 
@@ -84,5 +84,5 @@ class Pan:
 
         out = cv2.warpPerspective(masked,M,(maxWidth, maxHeight),flags=cv2.INTER_LINEAR)
 
-        cv2.imshow("Warped", out)
+        # cv2.imshow("Warped", out)
         return out
