@@ -26,3 +26,5 @@ class Food_recognition:
             return pasta
         elif len(beans) > len(meatballs) and len(beans) > len(pasta):
             return beans
+        else:
+            return 0

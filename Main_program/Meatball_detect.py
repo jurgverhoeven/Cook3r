@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 import Food
+from random import randrange
+
 
 class Meatball_detect:
     def getMeatballs(self, image):
@@ -56,6 +58,8 @@ class Meatball_detect:
         cv2.resizeWindow("Blurred", 500, 500)
         # cv2.imshow("Blurred", blurred)
 
+        cv2.imwrite("testpan.jpg", blurred)
+
         circles = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, 1, 100,
                                 param1=100, param2=26, minRadius=40, maxRadius=75)
         amount = 0
@@ -65,9 +69,12 @@ class Meatball_detect:
         if circles is not None:
             amount = len(circles[0])
             circles = np.uint16(np.around(circles))
+            count = 0
             for i in circles[0, :]:
                 meatballImage, x, y, r = self.__meatballCrop(maskedMeatballs, i[0], i[1], i[2])
+                cv2.imwrite("C:/Users/Jurg Verhoeven/Documents/Cook3r/Git/Cook3r/Main_program/Meatballs/"+str(randrange(0, 20000))+".jpg", meatballImage)
                 meatball = Food.Meatball(image=meatballImage, x=x, y=y, width=r, height=r)
 
                 meatballList.append(meatball)
+                count += 1
         return meatballList

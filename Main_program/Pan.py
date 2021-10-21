@@ -34,10 +34,7 @@ class Pan:
         # cv2.imshow("Blurred pan image", blurred)
 
         # circlesInBlurred = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, 1.3, 100, minRadius=500, maxRadius=750)
-        circlesInBlurred = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, 1.3, 100, minRadius=500, maxRadius=750)
-
-        # circlesInBlurred = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, 1.3, 100)
-        print(len(circlesInBlurred))
+        circlesInBlurred = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, 1.3, 100, minRadius=500, maxRadius=900)
 
         biggestCircle = Circle()
         mask = np.zeros(crop.shape[:2], dtype="uint8")
@@ -59,12 +56,6 @@ class Pan:
         pt_B = [biggestCircle.x-biggestCircle.r, biggestCircle.y+biggestCircle.r]
         pt_C = [biggestCircle.x+biggestCircle.r, biggestCircle.y+biggestCircle.r]
         pt_D = [biggestCircle.x+biggestCircle.r, biggestCircle.y-biggestCircle.r]
-
-        # print(pt_A)
-        # print(pt_B)
-        # print(pt_C)
-        # print(pt_D)
-
 
         width_AD = 1000
         width_BC = 1000

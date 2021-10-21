@@ -8,12 +8,12 @@ class Bean_detect:
         return self.__findBeans(image)
 
     def __findBeans(self, image):
-        MINIMAL_HSV = np.array([30, 100, 150], np.uint8)
-        MAXIMAL_HSV = np.array([140, 255, 255], np.uint8)
+        MINIMAL_HSV = np.array([29, 115, 160], np.uint8)
+        MAXIMAL_HSV = np.array([45, 245, 255], np.uint8)
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
         # Filter out the object by finding the correct color mask
-        blur = cv2.GaussianBlur(hsv,(31, 31),cv2.BORDER_DEFAULT)
+        blur = cv2.GaussianBlur(hsv,(25, 25),cv2.BORDER_DEFAULT)
         mask = cv2.inRange(blur,MINIMAL_HSV, MAXIMAL_HSV) # mask pasta no water
         # mask = cv2.inRange(blur, (20, 85, 120), (179, 255, 255)) # mask beans
         # Find the contours of the object
@@ -66,7 +66,7 @@ class Bean_detect:
             # Create a new image containing the contents of a single contour
             cnt = cv2.bitwise_and(image, image, mask=tempImage_8u)
             # Crop the new image to the minimal size
-            if cv2.contourArea(contours[i]) > 200: 
+            if cv2.contourArea(contours[i]) > 200 and cv2.contourArea(contours[i]) < 12000: 
                 x,y,w,h = cv2.boundingRect(contours[i])
                 cropped_image = cnt[y:y+h, x:x+w]
                 # beansList.append(cropped_image)
