@@ -33,13 +33,25 @@ if __name__ == "__main__":
         panImage = pan.getMasked()
         foods = food_recognition.recognize(panImage)
 
-        print(filename)
 
         if foods != 0:
+            totalprobabilities = [0, 0, 0]
             for food in foods:
                 # retrieve features from class
                 features = np.array((food.getArea(), food.getPerimeter(), food.getProminentHue(), food.getShape()))
                 features = features.reshape(-1, 4)
-                print(clf.predict_proba(features))
+
+                probability = clf.predict_proba(features)[0]
+
+                totalprobabilities[0] += probability[0]*100
+                totalprobabilities[1] += probability[1]*100
+                totalprobabilities[2] += probability[2]*100
+
+            totalprobabilities[0] /= len(foods)
+            totalprobabilities[1] /= len(foods)
+            totalprobabilities[2] /= len(foods)
+
+        print("The image: "+filename+" contains "+str(totalprobabilities[0])+"% beans, "+str(totalprobabilities[1])+"% meatballs and "+str(totalprobabilities[2])+"% pasta")
+
 
 

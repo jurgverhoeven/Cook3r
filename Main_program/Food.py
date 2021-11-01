@@ -43,7 +43,6 @@ class Food:
         return self.prominentColor[2]
 
     def getProminentHue(self):        
-        print(int(colorsys.rgb_to_hsv(((self.getProminentColorRed()/255) if self.getProminentColorRed()>0 else 0), ((self.getProminentColorGreen()/255) if self.getProminentColorGreen()>0 else 0), ((self.getProminentColorBlue()/255) if self.getProminentColorBlue()>0 else 0))[0]*180))
         return int(colorsys.rgb_to_hsv(((self.getProminentColorRed()/255) if self.getProminentColorRed()>0 else 0), ((self.getProminentColorGreen()/255) if self.getProminentColorGreen()>0 else 0), ((self.getProminentColorBlue()/255) if self.getProminentColorBlue()>0 else 0))[0]*180)
 
 

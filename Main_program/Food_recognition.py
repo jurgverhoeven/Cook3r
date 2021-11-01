@@ -16,9 +16,9 @@ class Food_recognition:
         pasta = self.pastaDetector.getPasta(panImage)
         beans = self.beanDetector.getBeans(panImage)
 
-        print("Amount of meatballs: "+str(len(meatballs)))
-        print("Amount of Pasta: "+str(len(pasta)))
-        print("Amount of Beans: "+str(len(beans)))
+        # print("Amount of meatballs: "+str(len(meatballs)))
+        # print("Amount of Pasta: "+str(len(pasta)))
+        # print("Amount of Beans: "+str(len(beans)))
 
         if len(meatballs) > len(pasta) and len(meatballs) > len(beans):
             return meatballs

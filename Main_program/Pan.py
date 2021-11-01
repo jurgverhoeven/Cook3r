@@ -47,8 +47,8 @@ class Pan:
         cv2.circle(mask, (biggestCircle.x, biggestCircle.y), biggestCircle.r, 255, -1)
         masked = cv2.bitwise_and(crop, crop, mask=mask)
         # cv2.imshow("Original", masked)
-        print("Biggest circle diameter: ")
-        print(biggestCircle.r)
+        # print("Biggest circle diameter: ")
+        # print(biggestCircle.r)
 
         newImage = np.zeros((1000,1000,3), np.uint8)
 
