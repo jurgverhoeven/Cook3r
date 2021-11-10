@@ -20,11 +20,18 @@ class Food_recognition:
         # print("Amount of Pasta: "+str(len(pasta)))
         # print("Amount of Beans: "+str(len(beans)))
 
-        if len(meatballs) > len(pasta) and len(meatballs) > len(beans):
-            return meatballs
-        elif len(pasta) > len(meatballs) and len(pasta) > len(beans):
-            return pasta
-        elif len(beans) > len(meatballs) and len(beans) > len(pasta):
-            return beans
-        else:
-            return 0
+        foods = []
+        foods.extend(meatballs)
+        foods.extend(pasta)
+        foods.extend(beans)
+
+        return foods
+
+        # if len(meatballs) > len(pasta) and len(meatballs) > len(beans):
+        #     return meatballs
+        # elif len(pasta) > len(meatballs) and len(pasta) > len(beans):
+        #     return pasta
+        # elif len(beans) > len(meatballs) and len(beans) > len(pasta):
+        #     return beans
+        # else:
+        #     return 0

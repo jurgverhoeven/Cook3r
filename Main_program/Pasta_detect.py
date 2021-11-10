@@ -14,7 +14,7 @@ class Pasta_detect:
 
         # Filter out the object by finding the correct color mask
         blur = cv2.GaussianBlur(hsv,(25, 25),cv2.BORDER_DEFAULT)
-        mask = cv2.inRange(blur, (20, 105, 145), (30, 200, 245)) 
+        mask = cv2.inRange(blur, (20, 105, 145), (30, 210, 245)) 
         # Find the contours of the object
         contours = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         
@@ -86,7 +86,7 @@ class Pasta_detect:
             # Uncomment the line below to display a window for each individual cropped image
             # # cv2.imshow(windowname, cropped_image)
             # Save the image and filter out the outliers that are too small
-            if(area > 1500 and area < 2500):
+            if(area > 300 and area < 3000):
                 pastaPiece = Food.Pasta(image=cropped_image, x=x, y=y, width=w, height=h)
                 pastaList.append(pastaPiece)
             # Reset the tempImage after each loop so the new image only contains an individual contour

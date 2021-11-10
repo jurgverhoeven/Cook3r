@@ -17,7 +17,7 @@ import Food_recognition
 from sklearn.utils import Bunch
 import glob
 
-test_data_path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/TestDataset/Pasta"
+test_data_path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/TestDataset/Meatballs"
 
 if __name__ == "__main__":
     clf = load("decision_tree_model.joblib")
@@ -47,9 +47,12 @@ if __name__ == "__main__":
                 totalprobabilities[1] += probability[1]*100
                 totalprobabilities[2] += probability[2]*100
 
-            totalprobabilities[0] /= len(foods)
-            totalprobabilities[1] /= len(foods)
-            totalprobabilities[2] /= len(foods)
+            if(totalprobabilities[0] > 0):
+                totalprobabilities[0] /= len(foods)
+            if(totalprobabilities[1] > 0):
+                totalprobabilities[1] /= len(foods)
+            if(totalprobabilities[2] > 0):
+                totalprobabilities[2] /= len(foods)
 
         print("The image: "+filename+" contains "+str(totalprobabilities[0])+"% beans, "+str(totalprobabilities[1])+"% meatballs and "+str(totalprobabilities[2])+"% pasta")
 
