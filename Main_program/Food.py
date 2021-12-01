@@ -9,9 +9,11 @@ rng.seed(12345)
 class Shape(Enum):
     Circle = 0
     Rectangle = 1
+    Oval = 2
 
 class Food:
     def __init__(self, image, shape, x, y, width, height):
+        self.image = image
         self.shape = shape
         self.x = x
         self.y = y
@@ -103,3 +105,15 @@ class Pasta(Food):
 class Bean(Food):
     def __init__(self, image, x, y, width, height):
         super(Bean, self).__init__(image, Shape.Rectangle, x, y, width, height)
+
+class Fishstick(Food):
+    def __init__(self, image, x, y, width, height):
+        super(Fishstick, self).__init__(image, Shape.Rectangle, x, y, width, height)
+
+class Potato(Food):
+    def __init__(self, image, x, y, width, height):
+        super(Potato, self).__init__(image, Shape.Oval, x, y, width, height)
+
+class Carrot(Food):
+    def __init__(self, image, x, y, width, height):
+        super(Carrot, self).__init__(image, Shape.Rectangle, x, y, width, height)
