@@ -10,12 +10,12 @@ import Food
 import os
 from Fetch_data import fetch_data
 
-food_path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Black_pans"
+food_path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Black_pans_v2"
 
 
 if __name__ == "__main__":
 
-    data_path = 'C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Machine Learning report/Masked_dataset'
+    data_path = 'C:/Users/Jurg Verhoeven/Documents/temp'
 
     # Fetch the data
     foods = fetch_data(food_path)

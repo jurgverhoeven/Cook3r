@@ -34,7 +34,7 @@ class Pan:
         # cv2.imshow("Blurred pan image", blurred)
 
         # circlesInBlurred = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, 1.3, 100, minRadius=500, maxRadius=750)
-        circlesInBlurred = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, 1.3, 100, minRadius=500, maxRadius=900)
+        circlesInBlurred = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, 1.3, 100, minRadius=500, maxRadius=1025)
 
         biggestCircle = Circle()
         mask = np.zeros(crop.shape[:2], dtype="uint8")
@@ -47,8 +47,8 @@ class Pan:
         cv2.circle(mask, (biggestCircle.x, biggestCircle.y), biggestCircle.r, 255, -1)
         masked = cv2.bitwise_and(crop, crop, mask=mask)
         # cv2.imshow("Original", masked)
-        # print("Biggest circle diameter: ")
-        # print(biggestCircle.r)
+        print("Biggest circle diameter: ")
+        print(biggestCircle.r)
 
         newImage = np.zeros((1000,1000,3), np.uint8)
 
@@ -77,3 +77,26 @@ class Pan:
 
         # cv2.imshow("Warped", out)
         return out
+
+
+if __name__ == "__main__":
+
+    import os
+    import glob
+
+    path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Black_pans_v2"
+    saveloc = "C:/Users/Jurg Verhoeven/Documents/temp"
+    
+    print("[INFO] loading images...")
+    p = os.path.sep.join([path, '**', '*.j*'])
+
+    file_list = [f for f in glob.iglob(p, recursive=True) if (os.path.isfile(f))]
+    print("[INFO] images found: {}".format(len(file_list)))
+
+    # loop over the image paths
+    for filename in file_list:
+        food_image = cv2.imread(filename)
+        print((os.path.basename(filename)))
+        pan = Pan(food_image)
+        pan_image = pan.getMasked()
+        cv2.imwrite(saveloc+"/masked_"+(os.path.basename(filename))+".jpg", pan_image)

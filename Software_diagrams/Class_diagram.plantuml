@@ -1,0 +1,196 @@
+@startuml Main Program- Class Diagram
+title Main Program- Class Diagram
+
+class Pan {
+  + image
+  +def _init_(self, image)
+  +def getMasked(self)
+}
+class Circle {
+  + x
+  + y
+  + r
+  +def _init_(self, x, y, r)
+}
+
+Enum Shape {
+  + Circle
+  + Rectangle
+  + Oval
+}
+
+class Food {
+  + shape
+  + x
+  + y
+  + width
+  + height
+  + area
+  + prominentColor
+  +def _init_(self, image, shape, x, y, width, height)
+  +def getImage(self)
+  +def getShape(self)
+  +def getArea(self)
+  +def getPerimeter(self)
+  +def getProminentColorBlue(self)
+  +def getProminentColorGreen(self)
+  +def getProminentColorRed(self)
+  +def getProminentHue(self)
+  +def determineArea(self, image)
+  +def determineProminentColor(self, img)
+}
+
+class Bean {
+  + shape
+  + x
+  + y
+  + width
+  + height
+  + area
+  + prominentColor
+  +def _init_(self, image, shape, x, y, width, height)
+}
+class Fishstick {
+  + shape
+  + x
+  + y
+  + width
+  + height
+  + area
+  + prominentColor
+  +def _init_(self, image, shape, x, y, width, height)
+}
+class Pasta {
+  + shape
+  + x
+  + y
+  + width
+  + height
+  + area
+  + prominentColor
+  +def _init_(self, image, shape, x, y, width, height)
+}
+class Meatball {
+  + shape
+  + x
+  + y
+  + width
+  + height
+  + area
+  + prominentColor
+  +def _init_(self, image, shape, x, y, width, height)
+}
+class Potato {
+  + shape
+  + x
+  + y
+  + width
+  + height
+  + area
+  + prominentColor
+  +def _init_(self, image, shape, x, y, width, height)
+}
+class Carrot {
+  + shape
+  + x
+  + y
+  + width
+  + height
+  + area
+  + prominentColor
+  +def _init_(self, image, shape, x, y, width, height)
+}
+
+class Food_recognition {
+  + meatballDetector
+  + pastaDetector
+  + beanDetector
+  + fishstickDetector
+  + potatoDetector
+  + carrotDetector
+  +def _init_(self)
+  +def recognize(self, panImage)
+}
+
+Enum TargetFood {
+  + Meatball
+  + Pasta
+  + Bean
+  + Fishstick
+  + Potato
+  + Carrot
+}
+
+class Detector {
+  + image
+  + maskedImage
+  + targetFood
+  +def _init_(self, image, minH, minS, minV, maxH, maxS, maxV, blurVal, targetFood)
+  +def maskImage(self, image, minH, minS, minV, maxH, maxS, maxV, blurVal)
+  +def findFood(self, minSize, maxSize)
+  +def createCorrectFood(self, contours, contour, contourIndex)
+  +def getImage(self)
+  +def getMaskedImage(self)
+  +def getTargetFood(self)
+}
+class Bean_detect {
+  + image
+  + maskedImage
+  + targetFood
+  +def _init_(self, minH, minS, minV, maxH, maxS, maxV, blurVal, TargetFood.Bean)
+}
+class Fishstick_detect {
+  + image
+  + maskedImage
+  + targetFood
+  +def _init_(self, minH, minS, minV, maxH, maxS, maxV, blurVal, TargetFood.Fishstick)
+}
+class Pasta_detect {
+  + image
+  + maskedImage
+  + targetFood
+  +def _init_(self, minH, minS, minV, maxH, maxS, maxV, blurVal, TargetFood.Pasta)
+}
+class Meatball_detect {
+  + image
+  + maskedImage
+  + targetFood
+  +def _init_(self, minH, minS, minV, maxH, maxS, maxV, blurVal, TargetFood.Meatball)
+  +def findFood(self, minSize, maxSize)
+  +def meatballCrop(self, image, x, y, r)
+}
+class Potato_detect {
+  + image
+  + maskedImage
+  + targetFood
+  +def _init_(self, minH, minS, minV, maxH, maxS, maxV, blurVal, TargetFood.Potato)
+}
+class Carrot_detect {
+  + image
+  + maskedImage
+  + targetFood
+  +def _init_(self, minH, minS, minV, maxH, maxS, maxV, blurVal, TargetFood.Carrot)
+}
+
+main o-right- Food_recognition
+main o-left- Pan
+Pan -left-> Circle
+
+Food_recognition o-right- Detector
+Food -left-> Shape
+Detector o-- Food
+Bean -left-|> Food
+Fishstick -left-|> Food
+Pasta -up-|> Food
+Meatball -up-|> Food
+Potato -right-|> Food
+Carrot -right-|> Food
+
+TargetFood <-- Detector
+Bean_detect -left-|> Detector
+Fishstick_detect -left-|> Detector
+Pasta_detect --|> Detector
+Meatball_detect --|> Detector
+Potato_detect --|> Detector
+Carrot_detect --|> Detector
+@enduml

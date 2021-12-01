@@ -1,0 +1,66 @@
+@startuml Sequence diagram classify food
+
+actor User
+participant Demo
+participant Food_recognition
+
+User -> Demo ++ : image
+Demo -> MeatballDetect ** : init(0)
+Demo -> PastaDetect ** : init(1)
+Demo -> BeanDetect ** : init(2)
+Demo -> Pan ** : Pan(image)
+Demo -> Pan ++ : getMasked()
+Pan -> Circle ** : Circle(x, y, r)
+return panImage
+Demo -> Food_recognition ++ : recognize(panImage)
+Food_recognition -> MeatballDetect ++ : findFood(panImage, minH, minS, minV, maxH, maxS, maxV, blurVal)
+alt circles is not None
+    loop i in circles
+        MeatballDetect -> MeatballDetect ++ : meatballCrop(maskedMeatballs, x, y, r)
+        return out, x, y, r
+        MeatballDetect -> Meatball ** : (meatballImage, x, y, r, r)
+    end
+end
+return meatballs
+Food_recognition -> PastaDetect ++ : findFood(panImage, minH, minS, minV, maxH, maxS, maxV, blurVal)
+PastaDetect -> PastaDetect ++ : maskImage(image)
+return maskedImage
+loop i in contours
+    alt maxSize > contourArea > minsize 
+        PastaDetect -> PastaDetect ++ : correctFood(contours, cnt, i)
+    end
+end
+return foodList
+return pasta
+Food_recognition -> BeanDetect ++ : findFood(panImage, minH, minS, minV, maxH, maxS, maxV, blurVal)
+BeanDetect -> BeanDetect ++ : maskImage(image)
+return maskedImage
+loop i in contours
+    alt maxSize > contourArea > minsize 
+        BeanDetect -> BeanDetect ++ : correctFood(contours, cnt, i)
+    end
+end
+return foodList
+return beans
+return foods
+
+alt foods != 0:
+    loop food in Foods:
+        Demo -> Food ++ : getArea()
+        return area
+        Demo -> Food ++ : getPerimeter()
+        return perimeter
+        Demo -> Food ++ : getProminentHue()
+        return prominentHue
+        Demo -> Food ++ : getShape()
+        return shape
+    end
+end
+
+return output
+
+
+
+
+
+@enduml

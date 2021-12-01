@@ -1,0 +1,59 @@
+@startuml Sequence diagram train food
+
+actor User
+
+User -> Train ++ : food_path
+Train -> Fetch_data ++ : fetch_data(food_path)
+loop filename in file_list
+    Fetch_data -> Pan ** : init(food_image)
+    Fetch_data -> Pan ++ : getMasked()
+    return pan_Image
+    Fetch_data -> Food_recognition ++ : recognize(panImage)
+    Food_recognition -> MeatballDetect ++ : findFood(panImage, minH, minS, minV, maxH, maxS, maxV, blurVal)
+    alt circles is not None
+        loop i in circles
+            MeatballDetect -> MeatballDetect ++ : meatballCrop(maskedMeatballs, x, y, r)
+            return out, x, y, r
+            MeatballDetect -> Meatball ** : (meatballImage, x, y, r, r)
+        end
+    end
+    return meatballs
+    Food_recognition -> PastaDetect ++ : findFood(panImage, minH, minS, minV, maxH, maxS, maxV, blurVal)
+    PastaDetect -> PastaDetect ++ : maskImage(image)
+    return maskedImage
+    loop i in contours
+        alt maxSize > contourArea > minsize
+            PastaDetect -> PastaDetect ++ : correctFood(contours, cnt, i)
+        end
+    end
+    return foodList
+    return pasta
+    Food_recognition -> BeanDetect ++ : findFood(panImage, minH, minS, minV, maxH, maxS, maxV, blurVal)
+    BeanDetect -> BeanDetect ++ : maskImage(image)
+    return maskedImage
+    loop i in contours
+        alt maxSize > contourArea > minsize
+            BeanDetect -> BeanDetect ++ : correctFood(contours, cnt, i)
+        end
+    end
+    return foodList
+    return beans
+    return foods
+
+    alt foods != 0:
+        loop food in Foods:
+            Fetch_data -> Food ++ : getArea()
+            return area
+            Fetch_data -> Food ++ : getPerimeter()
+            return perimeter
+            Fetch_data -> Food ++ : getProminentHue()
+            return prominentHue
+            Fetch_data -> Food ++ : getShape()
+            return shape
+        end
+    end
+end
+return dataset
+return model
+
+@enduml

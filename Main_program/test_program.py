@@ -17,7 +17,7 @@ import Food_recognition
 from sklearn.utils import Bunch
 import glob
 
-test_data_path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/TestDataset/Meatballs"
+test_data_path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/TestDataset/Beans"
 
 if __name__ == "__main__":
     clf = load("decision_tree_model.joblib")

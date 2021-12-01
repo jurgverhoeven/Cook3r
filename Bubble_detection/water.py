@@ -5,31 +5,37 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 print(tf.__version__)
-waterPath = 'C:/Users/Lou/Cook3r/Bubble_detection/Machinelearning/rotated'
+waterPath = 'C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Carrots-Fish_sticks-potatoes'
 # Fetch the data
 training = tf.keras.utils.image_dataset_from_directory(
-    waterPath, validation_split=0.2,
+    waterPath, 
+    validation_split=0.2,
     subset="training",
+    color_mode="rgb",
+    image_size=(256,256),
     seed=123
 )
 testing = tf.keras.utils.image_dataset_from_directory(
-    waterPath, validation_split=0.2,
+    waterPath, 
+    validation_split=0.2,
     subset="validation",
+    color_mode="rgb",
+    image_size=(256,256),
     seed=123
 )
 class_names = training.class_names
 
 model = tf.keras.Sequential([
   tf.keras.layers.Rescaling(1./255),
-  tf.keras.layers.Conv2D(2, 3, activation='relu'),
+  tf.keras.layers.Conv2D(32, 3, activation='relu'),
   tf.keras.layers.MaxPooling2D(),
-  tf.keras.layers.Conv2D(2, 3, activation='relu'),
+  tf.keras.layers.Conv2D(32, 3, activation='relu'),
   tf.keras.layers.MaxPooling2D(),
-  tf.keras.layers.Conv2D(2, 3, activation='relu'),
+  tf.keras.layers.Conv2D(32, 3, activation='relu'),
   tf.keras.layers.MaxPooling2D(),
   tf.keras.layers.Flatten(),
   tf.keras.layers.Dense(128, activation='relu'),
-  tf.keras.layers.Dense(2)
+  tf.keras.layers.Dense(7)
 ])
 
 model.compile(optimizer='adam',

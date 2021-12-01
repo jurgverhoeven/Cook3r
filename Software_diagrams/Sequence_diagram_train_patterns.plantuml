@@ -1,0 +1,32 @@
+@startuml Sequence diagram train food patterns
+
+actor User
+
+User -> Train ++ : food_path
+Train -> Fetch_data ++ : fetch_data(food_path)
+loop filename in file_list
+    Fetch_data -> Pan ** : init(food_image)
+    Fetch_data -> Pan ++ : getMasked()
+    return pan_Image
+    Fetch_data -> Food_recognition ++ : recognize(panImage)
+    Food_recognition -> Detector ++ : findFood(panImage, minH, minS, minV, maxH, maxS, maxV, blurVal)
+    return foods
+    return foods
+
+    alt foods != 0:
+    loop food in Foods:
+        Fetch_data -> Food ++ : getArea()
+        return area
+        Fetch_data -> Food ++ : getPerimeter()
+        return perimeter
+        Fetch_data -> Food ++ : getProminentHue()
+        return prominentHue
+        Fetch_data -> Food ++ : getShape()
+        return shape
+    end
+end
+end
+return dataset
+return model
+
+@enduml

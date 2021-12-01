@@ -1,0 +1,31 @@
+@startuml Sequence diagram classify food
+
+actor User
+participant Demo
+participant Food_recognition
+
+User -> Demo ++ : image
+
+Demo -> Detector ** : init(foodType)
+Demo -> Pan ** : init(image)
+Demo -> Pan ++ : getMasked()
+return panImage
+Demo -> Food_recognition ++ : recognize()
+Food_recognition -> Detector ++ : findFood(panImage, minH, minS, minV, maxH, maxS, maxV, blurVal)
+return food
+return foods
+alt foods != 0:
+    loop food in Foods:
+        Demo -> Food ++ : getArea()
+        return area
+        Demo -> Food ++ : getPerimeter()
+        return perimeter
+        Demo -> Food ++ : getProminentHue()
+        return prominentHue
+        Demo -> Food ++ : getShape()
+        return shape
+    end
+end
+return output
+
+@enduml
