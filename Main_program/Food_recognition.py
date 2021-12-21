@@ -1,20 +1,24 @@
 import Food
-import Meatball_detect
-import Pasta_detect
-import Bean_detect
+import Detector
 import cv2
 
 
 class Food_recognition:
     def __init__(self) -> None:
-        self.meatballDetector = Meatball_detect.Meatball_detect()
-        self.pastaDetector = Pasta_detect.Pasta_detect()
-        self.beanDetector = Bean_detect.Bean_detect()
+        self.meatballDetector = Detector.Meatball_detect()
+        self.pastaDetector = Detector.Pasta_detect()
+        self.beanDetector = Detector.Bean_detect()
+        self.carrotDetector = Detector.Carrot_detect()
+        self.fishStickDetector = Detector.Fishstick_detect()
+        self.potatoDetector = Detector.Potato_detect()
 
     def recognize(self, panImage):
-        meatballs = self.meatballDetector.getMeatballs(panImage)
-        pasta = self.pastaDetector.getPasta(panImage)
-        beans = self.beanDetector.getBeans(panImage)
+        meatballs = self.meatballDetector.findFood(panImage)
+        pasta = self.pastaDetector.findFood(panImage)
+        beans = self.beanDetector.findFood(panImage)
+        carrots = self.potatoDetector.findFood(panImage)
+        fish_sticks = self.fishStickDetector.findFood(panImage)
+        potatoes = self.potatoDetector.findFood(panImage)
 
         # print("Amount of meatballs: "+str(len(meatballs)))
         # print("Amount of Pasta: "+str(len(pasta)))
@@ -24,6 +28,9 @@ class Food_recognition:
         foods.extend(meatballs)
         foods.extend(pasta)
         foods.extend(beans)
+        foods.extend(carrots)
+        foods.extend(fish_sticks)
+        foods.extend(potatoes)
 
         return foods
 

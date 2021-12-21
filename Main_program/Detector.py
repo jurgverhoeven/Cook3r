@@ -12,25 +12,31 @@ class TargetFood(Enum):
     Carrot = 5
 
 class Detector:
-    def __init__(self, image, minH, minS, minV, maxH, maxS, maxV, blurVal, targetFood):
-        self.image = image
-        self.maskedImage = self.maskImage(image, minH, minS, minV, maxH, maxS, maxV, blurVal)
+    def __init__(self, minH, minS, minV, maxH, maxS, maxV, blurVal, targetFood):
+        self.minH = minH
+        self.minS = minS
+        self.minV = minV
+        self.maxH = maxH
+        self.maxS = maxS
+        self.maxV = maxV
+        self.blurVal = blurVal
         self.targetFood = targetFood
 
-    def maskImage(self, image, minH, minS, minV, maxH, maxS, maxV, blurVal):
+
+    def maskImage(self, image):
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-        blur = cv2.GaussianBlur(hsv,(blurVal, blurVal),cv2.BORDER_DEFAULT)
-        mask = cv2.inRange(blur, (minH, minS, minV), (maxH, maxS, maxV)) 
+        blur = cv2.GaussianBlur(hsv,(self.blurVal, self.blurVal),cv2.BORDER_DEFAULT)
+        mask = cv2.inRange(blur, (self.minH, self.minS, self.minV), (self.maxH, self.maxS, self.maxV)) 
         filteredImage = cv2.bitwise_and(image, image, mask=mask)
         cv2.imshow("Mask", filteredImage)
         return filteredImage
 
-    def findFood(self, minSize, maxSize):
+    def findFood(self, image, minSize, maxSize):
         kernel = np.array([[1, 1, 1], [1, -13, 1], [1, 1, 1]], dtype=np.float32)
         # Use laplacian filtering and convert it to CV_32F
         # This is because something deeper than CV_8U is needed because of negative values in the kernel
-        imgLaplacian = cv2.filter2D(self.getMaskedImage(), cv2.CV_32F, kernel)
-        sharp = np.float32(self.getMaskedImage())
+        imgLaplacian = cv2.filter2D(self.getMaskedImage(image), cv2.CV_32F, kernel)
+        sharp = np.float32(self.getMaskedImage(image))
         imgResult = sharp - imgLaplacian
 
         # Convert the image back to 8bits gray scale
@@ -65,7 +71,7 @@ class Detector:
             cv2.drawContours(tempImage, contours, i, (i+1), -1)
             tempImage_8u = (tempImage * 10).astype('uint8')
             # Create a new image containing the contents of a single contour
-            cnt = cv2.bitwise_and(self.getImage(), self.getImage(), mask=tempImage_8u)
+            cnt = cv2.bitwise_and(image, image, mask=tempImage_8u)
             # Crop the new image to the minimal size
             if cv2.contourArea(contours[i]) > minSize and cv2.contourArea(contours[i]) < maxSize: 
                 print(cv2.contourArea(contours[i]))
@@ -95,21 +101,19 @@ class Detector:
         elif(self.getTargetFood() == TargetFood.Carrot):
             return Food.Carrot(image=cropped_image, x=x, y=y, width=w, height=h)
 
-    def getImage(self):
-        return self.image
 
-    def getMaskedImage(self):
-        return self.maskedImage
+    def getMaskedImage(self, image):
+        return self.maskImage(image)
 
     def getTargetFood(self):
         return self.targetFood
 
 class Meatball_detect(Detector):
-    def __init__(self, image, minH, minS, minV, maxH, maxS, maxV, blurVal):
-        super(Meatball_detect, self).__init__(image, minH, minS, minV, maxH, maxS, maxV, blurVal, TargetFood.Meatball)
+    def __init__(self):
+        super(Meatball_detect, self).__init__(minH=0, minS=60, minV=0, maxH=179, maxS=255, maxV=255, blurVal=5, targetFood=TargetFood.Meatball)
 
-    def findFood(self):
-        maskedMeatballs = self.getMaskedImage()
+    def findFood(self, image):
+        maskedMeatballs = self.getMaskedImage(image)
         gray = cv2.cvtColor(maskedMeatballs, cv2.COLOR_BGR2GRAY)
         circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 100, param1=100, param2=26, minRadius=40, maxRadius=75)
         meatballList = []
@@ -151,21 +155,21 @@ class Meatball_detect(Detector):
         return out, x, y, r
 
 class Pasta_detect(Detector):
-    def __init__(self, image, minH, minS, minV, maxH, maxS, maxV, blurVal):
-        super(Pasta_detect, self).__init__(image, minH, minS, minV, maxH, maxS, maxV, blurVal, TargetFood.Pasta)
+    def __init__(self):
+        super(Pasta_detect, self).__init__(minH=20, minS=105, minV=145, maxH=30, maxS=210, maxV=245, blurVal=25, targetFood=TargetFood.Pasta)
 
 class Bean_detect(Detector):
-    def __init__(self, image, minH, minS, minV, maxH, maxS, maxV, blurVal):
-        super(Bean_detect, self).__init__(image, minH, minS, minV, maxH, maxS, maxV, blurVal, TargetFood.Bean)
+    def __init__(self):
+        super(Bean_detect, self).__init__(minH=29, minS=90, minV=198, maxH=55, maxS=250, maxV=255, blurVal=25, targetFood=TargetFood.Bean)
 
 class Carrot_detect(Detector):
-    def __init__(self, image, minH, minS, minV, maxH, maxS, maxV, blurVal):
-        super(Carrot_detect, self).__init__(image, minH, minS, minV, maxH, maxS, maxV, blurVal, TargetFood.Carrot)
+    def __init__(self):
+        super(Carrot_detect, self).__init__(minH=5, minS=90, minV=120, maxH=20, maxS=220, maxV=255, blurVal=3, targetFood=TargetFood.Carrot)
 
 class Fishstick_detect(Detector):
-    def __init__(self, image, minH, minS, minV, maxH, maxS, maxV, blurVal):
-        super(Fishstick_detect, self).__init__(image, minH, minS, minV, maxH, maxS, maxV, blurVal, TargetFood.Fishstick)
+    def __init__(self):
+        super(Fishstick_detect, self).__init__(minH=10, minS=150, minV=65, maxH=20, maxS=250, maxV=250, blurVal=3, targetFood=TargetFood.Fishstick)
 
 class Potato_detect(Detector):
-    def __init__(self, image, minH, minS, minV, maxH, maxS, maxV, blurVal):
-        super(Potato_detect, self).__init__(image, minH, minS, minV, maxH, maxS, maxV, blurVal, TargetFood.Potato)
+    def __init__(self):
+        super(Potato_detect, self).__init__(minH=20, minS=55, minV=145, maxH=30, maxS=165, maxV=250, blurVal=15, targetFood=TargetFood.Potato)

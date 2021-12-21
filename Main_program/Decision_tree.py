@@ -16,12 +16,12 @@ from sklearn.metrics import plot_confusion_matrix, classification_report
 from mlxtend.evaluate import bias_variance_decomp
 
 
-food_path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Black_pans"
+food_path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Black_pans_v2_combined"
 
 
 if __name__ == "__main__":
 
-    data_path = 'C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Machine Learning report/Masked_dataset'
+    data_path = 'C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Black_pans_v2_combined'
 
     # Fetch the data
     # foods = fetch_data(food_path)
@@ -44,7 +44,7 @@ if __name__ == "__main__":
     # Data preparation (note that a pipeline  would help here)
     # trainX = StandardScaler().fit_transform(trainX)
 
-    clf = tree.DecisionTreeClassifier(random_state=0, max_depth=2)
+    clf = tree.DecisionTreeClassifier(random_state=0)
     clf = clf.fit(trainX, trainY)
 
     dump(clf, "decision_tree_model.joblib")

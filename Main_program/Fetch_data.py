@@ -2,11 +2,9 @@ import os
 import glob
 import numpy as np
 from sklearn.utils import Bunch
+import Detector
 import Food
 import cv2
-import Bean_detect
-import Meatball_detect
-import Pasta_detect
 import Pan
 
 def fetch_data(data_path):
@@ -34,18 +32,33 @@ def fetch_data(data_path):
         if label == "Meatballs":
             print("Meatball class, shape circle.")
             # food_item = Food.Meatball(food_image)
-            meatball_detect = Meatball_detect.Meatball_detect()
-            food_items.extend(meatball_detect.getMeatballs(pan_image))
+            meatball_detect = Detector.Meatball_detect()
+            food_items.extend(meatball_detect.findFood(image=pan_image))
         elif label == "Pasta":
             print("Pasta class, shape rectangle")
             # food_item = Food.Pasta(food_image)
-            pasta_detect = Pasta_detect.Pasta_detect()
-            food_items.extend(pasta_detect.getPasta(pan_image))
+            pasta_detect = Detector.Pasta_detect()
+            food_items.extend(pasta_detect.findFood(image=pan_image, minSize=200, maxSize=20000))
         elif label == "Beans":
             print("Bean class, shape rectangle")
             # food_item = Food.Bean(food_image)
-            bean_detect = Bean_detect.Bean_detect()
-            food_items.extend(bean_detect.getBeans(pan_image))
+            bean_detect = Detector.Bean_detect()
+            food_items.extend(bean_detect.findFood(image=pan_image, minSize=200, maxSize=20000))
+        elif label == "Carrots_with_water":
+            print("Carrots_without_water class, shape rectangle")
+            # food_item = Food.Bean(food_image)
+            carrot_detect = Detector.Carrot_detect()
+            food_items.extend(carrot_detect.findFood(image=pan_image, minSize=200, maxSize=20000))
+        elif label == "Fish_sticks":
+            print("Fish_sticks class, shape rectangle")
+            # food_item = Food.Bean(food_image)
+            fish_stick_detect = Detector.Fishstick_detect()
+            food_items.extend(fish_stick_detect.findFood(image=pan_image, minSize=200, maxSize=20000))
+        elif label == "Potatoes_with_water":
+            print("Potatoes_without_water class, shape oval")
+            # food_item = Food.Bean(food_image)
+            potatoes_detect = Detector.Potato_detect()
+            food_items.extend(potatoes_detect.findFood(image=pan_image, minSize=200, maxSize=20000))
         
         for food_item in food_items:
             target.append(label)
