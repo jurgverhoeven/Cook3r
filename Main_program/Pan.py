@@ -26,7 +26,7 @@ class Pan:
         cv2.imshow("Cropped pan image", crop)
 
         gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
-        blurred = cv2.GaussianBlur(gray, (15, 15), cv2.BORDER_DEFAULT)
+        blurred = cv2.GaussianBlur(gray, (5, 5), cv2.BORDER_DEFAULT)
         # blurred = cv2.blur(gray, (15, 15))
 
         cv2.namedWindow("Blurred pan image", cv2.WINDOW_NORMAL)
@@ -34,7 +34,7 @@ class Pan:
         cv2.imshow("Blurred pan image", blurred)
 
         # circlesInBlurred = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, 1.3, 100, minRadius=500, maxRadius=750)
-        circlesInBlurred = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, 1, 100, minRadius=500, maxRadius=1025)
+        circlesInBlurred = cv2.HoughCircles(blurred, cv2.HOUGH_GRADIENT, 1, 100, minRadius=100, maxRadius=200)
 
         biggestCircle = Circle()
         mask = np.zeros(crop.shape[:2], dtype="uint8")
@@ -84,23 +84,30 @@ if __name__ == "__main__":
     import os
     import glob
 
-    path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Black_pans_v2"
+    path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Gezamenlijk/Test fotos/Joost en Thijs/wortelwebcam/wortel (1).jpg"
+    
+    image = cv2.imread(path)
+    pan = Pan(image)
+    pan_image = pan.getMasked()
+    cv2.imshow("Masked pan image", pan_image)
+    cv2.imwrite("plaatje voor Lou.jpg", pan_image)
+    
     # path = "C:/Users/Jurg Verhoeven/OneDrive - HAN/Bureaublad/PanDetect"
 
-    saveloc = "C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Black_pans_v2_masked_warped"
+    # saveloc = "C:/Users/Jurg Verhoeven/Documents/temp"
     
-    print("[INFO] loading images...")
-    p = os.path.sep.join([path, '**', '*.j*'])
+    # print("[INFO] loading images...")
+    # p = os.path.sep.join([path, '**', '*.j*'])
 
-    file_list = [f for f in glob.iglob(p, recursive=True) if (os.path.isfile(f))]
-    print("[INFO] images found: {}".format(len(file_list)))
+    # file_list = [f for f in glob.iglob(p, recursive=True) if (os.path.isfile(f))]
+    # print("[INFO] images found: {}".format(len(file_list)))
 
-    # loop over the image paths
-    for filename in file_list:
-        label = filename.split(os.path.sep)[-2]
-        food_image = cv2.imread(filename)
-        print((os.path.basename(filename)))
-        pan = Pan(food_image)
-        pan_image = pan.getMasked()
-        cv2.imwrite(saveloc+"/"+label+"/"+(os.path.basename(filename))+".jpg", pan_image)
+    # # loop over the image paths
+    # for filename in file_list:
+    #     label = filename.split(os.path.sep)[-2]
+    #     food_image = cv2.imread(filename)
+    #     print((os.path.basename(filename)))
+    #     pan = Pan(food_image)
+    #     pan_image = pan.getMasked()
+    #     cv2.imwrite(saveloc+"/"+label+"/"+(os.path.basename(filename))+".jpg", pan_image)
     cv2.waitKey(0)
