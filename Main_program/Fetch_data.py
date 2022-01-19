@@ -21,9 +21,10 @@ def fetch_data(data_path):
 
     # loop over the image paths
     for filename in file_list:
-        food_image = cv2.imread(filename)
-        pan = Pan.Pan(food_image)
-        pan_image = pan.getMasked()
+        pan_image = cv2.imread(filename)
+        # food_image = cv2.imread(filename)
+        # pan = Pan.Pan(food_image)
+        # pan_image = pan.getMasked()
         label = filename.split(os.path.sep)[-2]
 
         food_items = []

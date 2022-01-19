@@ -29,8 +29,8 @@ class CookerDetect:
         return out
     def getMasked(self):
         
-        cv2.namedWindow("Original pan image", cv2.WINDOW_NORMAL)
-        cv2.imshow("Original pan image", self.image)
+        # cv2.namedWindow("Original pan image", cv2.WINDOW_NORMAL)
+        # cv2.imshow("Original pan image", self.image)
         pit1 = self.pit([0,0],[0,750],[750,750],[750,0])
         pit2 = self.pit([750,0],[750,750],[1500,750],[1500,0])
         pit3 = self.pit([375,750],[375,1500],[1125,1500],[1125,750])

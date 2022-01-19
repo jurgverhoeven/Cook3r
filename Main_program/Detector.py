@@ -28,7 +28,7 @@ class Detector:
         blur = cv2.GaussianBlur(hsv,(self.blurVal, self.blurVal),cv2.BORDER_DEFAULT)
         mask = cv2.inRange(blur, (self.minH, self.minS, self.minV), (self.maxH, self.maxS, self.maxV)) 
         filteredImage = cv2.bitwise_and(image, image, mask=mask)
-        cv2.imshow("Mask", filteredImage)
+        # cv2.imshow("Mask", filteredImage)
         return filteredImage
 
     def findFood(self, image, minSize, maxSize):
@@ -62,7 +62,7 @@ class Detector:
         # Create the marker image for the watershed algorithm
         markers = np.zeros(dist.shape, dtype=np.int32)
         tempImage = np.zeros(dist.shape, dtype=np.int32)
-
+        
         foodList = []
         for i in range(len(contours)):
             # Draw the foreground markers
@@ -74,15 +74,15 @@ class Detector:
             cnt = cv2.bitwise_and(image, image, mask=tempImage_8u)
             # Crop the new image to the minimal size
             if cv2.contourArea(contours[i]) > minSize and cv2.contourArea(contours[i]) < maxSize: 
-                print(cv2.contourArea(contours[i]))
+                # print(cv2.contourArea(contours[i]))
                 food = self.createCorrectFood(contours, cnt, i)
                 foodList.append(food)
             tempImage = np.zeros(dist.shape, dtype=np.int32)
         markers_8u = (markers * 10).astype('uint8')
 
-        cv2.namedWindow('Markers', cv2.WINDOW_NORMAL)
-        cv2.resizeWindow('Markers', 500, 500)
-        cv2.imshow('Markers', markers_8u)
+        # cv2.namedWindow('Markers', cv2.WINDOW_NORMAL)
+        # cv2.resizeWindow('Markers', 500, 500)
+        # cv2.imshow('Markers', markers_8u)
         return foodList
     
     def createCorrectFood(self, contours, contour, contourIndex):
@@ -161,6 +161,7 @@ class Pasta_detect(Detector):
 class Bean_detect(Detector):
     def __init__(self):
         super(Bean_detect, self).__init__(minH=29, minS=90, minV=198, maxH=55, maxS=250, maxV=255, blurVal=25, targetFood=TargetFood.Bean)
+        # super(Bean_detect, self).__init__(minH=15, minS=15, minV=120, maxH=45, maxS=150, maxV=255, blurVal=25, targetFood=TargetFood.Bean)
 
 class Carrot_detect(Detector):
     def __init__(self):

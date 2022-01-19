@@ -18,7 +18,7 @@ alt circles is not None
     loop i in circles
         MeatballDetect -> MeatballDetect ++ : meatballCrop(maskedMeatballs, x, y, r)
         return out, x, y, r
-        MeatballDetect -> Meatball ** : (meatballImage, x, y, r, r)
+        MeatballDetect -> Food ** : (meatballImage, x, y, r, r)
     end
 end
 return meatballs
@@ -42,6 +42,40 @@ loop i in contours
 end
 return foodList
 return beans
+
+Food_recognition -> FishStickDetect ++ : findFood(panImage, minH, minS, minV, maxH, maxS, maxV, blurVal)
+FishStickDetect -> FishStickDetect ++ : maskImage(image)
+return maskedImage
+loop i in contours
+    alt maxSize > contourArea > minsize 
+        FishStickDetect -> FishStickDetect ++ : correctFood(contours, cnt, i)
+    end
+end
+return foodList
+return fishSticks
+
+Food_recognition -> PotatoDetect ++ : findFood(panImage, minH, minS, minV, maxH, maxS, maxV, blurVal)
+PotatoDetect -> PotatoDetect ++ : maskImage(image)
+return maskedImage
+loop i in contours
+    alt maxSize > contourArea > minsize 
+        PotatoDetect -> PotatoDetect ++ : correctFood(contours, cnt, i)
+    end
+end
+return foodList
+return potatoes
+
+Food_recognition -> CarrotDetect ++ : findFood(panImage, minH, minS, minV, maxH, maxS, maxV, blurVal)
+CarrotDetect -> CarrotDetect ++ : maskImage(image)
+return maskedImage
+loop i in contours
+    alt maxSize > contourArea > minsize 
+        CarrotDetect -> CarrotDetect ++ : correctFood(contours, cnt, i)
+    end
+end
+return foodList
+return carrots
+
 return foods
 
 alt foods != 0:

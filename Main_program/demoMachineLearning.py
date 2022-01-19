@@ -5,7 +5,6 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.model_selection import train_test_split, cross_val_score
 import matplotlib.pyplot as plt
 import seaborn as sns
-import cv2
 import Food
 import os
 from Fetch_data import fetch_data
@@ -18,24 +17,24 @@ from sklearn.utils import Bunch
 import glob
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
-
-
-
-
+import numpy as np
+import cv2
+from videoCapture import videoCapture
 
 if __name__ == "__main__":
-    Tk().withdraw()
-    test_data_path = askopenfilename()
+    cap = videoCapture("C:/Users/Jurg Verhoeven/OneDrive - HAN/EVML Cook3r 2021-2022/Lou, Tim, Jurg/Dataset/Filmpjes/beans2.mov")
+    frame = cap.getFrame()
     clf = load("decision_tree_model.joblib")
     food_recognition = Food_recognition.Food_recognition()
-    image = cv2.imread(test_data_path)
-    pan = Pan.Pan(image)
-    panImage = pan.getMasked()
-    cv2.imshow("Masked", panImage)
-    foods = food_recognition.recognize(panImage)
 
+    while(cap.isSucces):
+        cv2.waitKey(1)
+        pan = Pan.Pan(frame)
+        panImage = pan.getMasked()
+        cv2.imshow("Masked pan", panImage);
+        foods = food_recognition.recognize(panImage)
 
-    if foods != 0:
+        if foods != 0:
             totalprobabilities = [0, 0, 0, 0, 0, 0, 0]
             for food in foods:
                 features = np.array((food.getArea(), food.getPerimeter(), food.getProminentHue(), food.getShape()))
@@ -63,7 +62,16 @@ if __name__ == "__main__":
                 totalprobabilities[5] /= len(foods)
 
             print("The frame contains "+str(totalprobabilities[0])+"% beans, "+str(totalprobabilities[1])+"% carrots_with_water and "+str(totalprobabilities[2])+"% Fish_sticks"+str(totalprobabilities[3])+"% Meatballs, "+str(totalprobabilities[4])+"% Pasta and "+str(totalprobabilities[5])+"% Potatoes_with_water")
-    cv2.waitKey(0)
+
+        frame = cap.getFrame()
+        frame = cap.getFrame()
+        frame = cap.getFrame()
+        frame = cap.getFrame()
+        frame = cap.getFrame()
+        frame = cap.getFrame()
+        frame = cap.getFrame()
+        frame = cap.getFrame()
+        frame = cap.getFrame()
 
 
 

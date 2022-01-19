@@ -14,11 +14,11 @@ class Food_recognition:
 
     def recognize(self, panImage):
         meatballs = self.meatballDetector.findFood(panImage)
-        pasta = self.pastaDetector.findFood(panImage)
-        beans = self.beanDetector.findFood(panImage)
-        carrots = self.potatoDetector.findFood(panImage)
-        fish_sticks = self.fishStickDetector.findFood(panImage)
-        potatoes = self.potatoDetector.findFood(panImage)
+        pasta = self.pastaDetector.findFood(panImage, minSize=200, maxSize=20000)
+        beans = self.beanDetector.findFood(panImage, minSize=200, maxSize=20000)
+        carrots = self.carrotDetector.findFood(panImage, minSize=200, maxSize=20000)
+        fish_sticks = self.fishStickDetector.findFood(panImage, minSize=200, maxSize=20000)
+        potatoes = self.potatoDetector.findFood(panImage, minSize=200, maxSize=20000)
 
         # print("Amount of meatballs: "+str(len(meatballs)))
         # print("Amount of Pasta: "+str(len(pasta)))
